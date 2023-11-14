@@ -8,21 +8,23 @@ st.title("Informações do País")
 
 pais = st.text_input("Nome do País")
 if st.button("Pesquisar País"):
-    response = requests.get(f"https://restcountries.com/v3.1/name/{pais}?fullText=true")
-    response = response.json()
-    nomeOf = response[0]['name']['official']
-    fronteiras = response[0]['borders']
-    for paises in fronteiras:
-        if virgula == False:
-            str_fronteira += paises
-            virgula = True
-        str_fronteira += "," + " " + paises
-    latlng = response[0]['latlng']
-    brasao = response[0]["coatOfArms"]['png']
-    bandeira = response[0]["flags"]['png']
-    extender = True
-else:
-    pass
+    try:
+        response = requests.get(f"https://restcountries.com/v3.1/name/{pais}?fullText=true")
+        response = response.json()
+        nomeOf = response[0]['name']['official']
+        fronteiras = response[0]['borders']
+        for paises in fronteiras:
+            if virgula == False:
+                str_fronteira += paises
+                virgula = True
+            str_fronteira += "," + " " + paises
+        latlng = response[0]['latlng']
+        brasao = response[0]["coatOfArms"]['png']
+        bandeira = response[0]["flags"]['png']
+        extender = True
+    except:
+        st.warning("Achou que não teria mensagem de erro?")
+        st.warning("Escreve ai um pais que existe fazendo favor")
 
 if extender:
     with st.expander("See explanation"):
